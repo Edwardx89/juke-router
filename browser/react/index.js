@@ -1,20 +1,8 @@
-'use strict';
-const React = require('react');
-const ReactDOM = require('react-dom');
-import Main from './Main.js'
-import Sidebar from './Sidebar.js'
-import Footer from './Footer.js'
-import {Router, Route, hashHistory} from 'react-router';
-
-// class Main extends React.Component {
-//   /** Hello world! **/
-// }
-// module.exports = Main;
-
+import React from 'react';
+import ReactDOM from 'react-dom';
+import AppContainer from './containers/AppContainer';
 
 ReactDOM.render(
-  <Router history={hashHistory}>
-    <Route path="/" component={Main} />
-  </Router>,
+  <AppContainer />,
   document.getElementById('app')
 );
