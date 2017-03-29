@@ -106,7 +106,7 @@ export default class AppContainer extends Component {
   }
 
   selectArtist (artistId) {
-    axios.get(`/api/artists/${artistId}/songs`)
+    axios.get(`/api/artists/${artistId}`)
       .then(res => res.data)
       .then(artist => this.setState({
         selectedArtist: convertArtist(artist)

@@ -21713,7 +21713,7 @@
 	    value: function selectArtist(artistId) {
 	      var _this4 = this;
 	
-	      _axios2.default.get('/api/artists/' + artistId + '/songs').then(function (res) {
+	      _axios2.default.get('/api/artists/' + artistId).then(function (res) {
 	        return res.data;
 	      }).then(function (artist) {
 	        return _this4.setState({
@@ -28711,8 +28711,9 @@
 	};
 	
 	var convertArtist = exports.convertArtist = function convertArtist(artist) {
-	  artist.songs = artist.map(convertSong);
-	  return artist;
+	  // artist.songs = artist.map(convertSong);
+	  console.log('artist', artist);
+	  // return artist;
 	  // axios.get('/api/songs/${songs.id}')
 	  // console.log('artist',artist)
 	};
