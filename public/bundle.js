@@ -60,13 +60,38 @@
 	
 	var _reactRouter = __webpack_require__(212);
 	
+	var _Albums = __webpack_require__(206);
+	
+	var _Albums2 = _interopRequireDefault(_Albums);
+	
+	var _Album = __webpack_require__(207);
+	
+	var _Album2 = _interopRequireDefault(_Album);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	_reactDom2.default.render(_react2.default.createElement(
 	  _reactRouter.Router,
 	  { history: _reactRouter.hashHistory },
-	  _react2.default.createElement(_reactRouter.Router, { path: '/', component: _AppContainer2.default })
+	  _react2.default.createElement(
+	    _reactRouter.Route,
+	    { path: '/', component: _AppContainer2.default },
+	    _react2.default.createElement(_reactRouter.IndexRedirect, { to: '/albums' }),
+	    _react2.default.createElement(
+	      _reactRouter.Route,
+	      { path: '/albums', component: _Albums2.default },
+	      _react2.default.createElement(_reactRouter.Route, { path: '/albums/:albumId', component: _Album2.default })
+	    )
+	  )
 	), document.getElementById('app'));
+	
+	// <Route exact path="/" render={() => (
+	//   loggedIn ? (
+	//     <Redirect to="/dashboard"/>
+	//   ) : (
+	//     <PublicHomePage/>
+	//   )
+	// )}/>
 
 /***/ },
 /* 1 */
@@ -23264,7 +23289,6 @@
 	
 	  var albums = props.albums;
 	  var selectAlbum = props.selectAlbum;
-	
 	  return _react2.default.createElement(
 	    "div",
 	    null,
@@ -23340,7 +23364,7 @@
 	  var currentSong = props.currentSong;
 	  var isPlaying = props.isPlaying;
 	  var toggleOne = props.toggleOne;
-	
+	  console.log(props);
 	  return _react2.default.createElement(
 	    'div',
 	    { className: 'album' },

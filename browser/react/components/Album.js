@@ -7,7 +7,7 @@ const Album = (props) => {
   const currentSong = props.currentSong;
   const isPlaying = props.isPlaying;
   const toggleOne = props.toggleOne;
-
+  console.log(props);
   return (
     <div className="album">
       <div>
