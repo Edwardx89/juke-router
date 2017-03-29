@@ -21711,16 +21711,39 @@
 	  }, {
 	    key: 'selectArtist',
 	    value: function selectArtist(artistId) {
+	      var _this4 = this;
 	
-	      // const artist = axios.get(`/api/artists/${artistId}`);
-	      var song = _axios2.default.get('/api/artists/' + artistId + '/songs');
+	      var artist = _axios2.default.get('/api/artists/' + artistId);
+	      var songs = _axios2.default.get('/api/artists/' + artistId + '/songs');
+	      var albums = _axios2.default.get('/api/artists/' + artistId + '/albums');
 	
-	      Promise.all([song]).then(function (arr) {
+	      Promise.all([songs, albums, artist]).then(function (arr) {
 	        return arr.map(function (elem) {
 	          return elem.data;
 	        });
 	      }).then(function (arr) {
-	        console.log(arr);
+	
+	        var songNames = arr[0].map(function (elem) {
+	          return elem.name;
+	        });
+	        var songIds = arr[0].map(function (elem) {
+	          return elem.id;
+	        });
+	        var albumNames = arr[1].map(function (elem) {
+	          return elem.name;
+	        });
+	
+	        var artist = arr[2];
+	
+	        artist.songNames = songNames;
+	        artist.albumNames = albumNames;
+	        artist.songIds = songIds;
+	
+	        return artist;
+	      }).then(function (artist) {
+	        _this4.setState({
+	          selectedArtist: (0, _utils.convertArtist)(artist)
+	        });
 	      });
 	
 	      // axios.get(`/api/artists/${artistId}`)
@@ -21758,7 +21781,8 @@
 	            selectAlbum: this.selectAlbum,
 	
 	            artists: this.state.artists,
-	            selectArtist: this.selectArtist
+	            selectArtist: this.selectArtist,
+	            selectedArtist: this.state.selectedArtist
 	          }) : null
 	        ),
 	        _react2.default.createElement(_Player2.default, {
@@ -28719,17 +28743,12 @@
 	};
 	
 	var convertArtist = exports.convertArtist = function convertArtist(artist) {
-	  // the artist object have the song names and the song urls on them
 	
-	  // the artist object already has the url on it
+	  artist.songUrls = artist.songIds.map(function (songId) {
+	    return "/api/songs/" + songId + "/audio";
+	  });
 	
-	  // we just need the 
-	
-	
-	  // artist.songs = artist.map(convertSong);
-	  // return artist;
-	  // axios.get('/api/songs/${songs.id}')
-	  // console.log('artist',artist)
+	  return artist;
 	};
 	
 	var convertAlbums = exports.convertAlbums = function convertAlbums(albums) {
@@ -28852,6 +28871,45 @@
 	  }, {
 	    key: 'render',
 	    value: function render() {
+	      console.log(this.props);
+	      console.log('running?');
+	
+	      var albums = this.props.albums.map(function (album) {
+	        return _react2.default.createElement(
+	          'div',
+	          null,
+	          _react2.default.createElement(
+	            'div',
+	            { className: 'col-xs-10' },
+	            album.name
+	          ),
+	          _react2.default.createElement(
+	            'div',
+	            { className: 'col-xs-10' },
+	            album.songs.length,
+	            ' songs'
+	          )
+	        );
+	      });
+	
+	      var songs = this.props.songs.map(function (song) {
+	
+	        return _react2.default.createElement(
+	          'div',
+	          null,
+	          _react2.default.createElement(
+	            'div',
+	            { className: 'col-xs-10' },
+	            selectedArtist.songNames
+	          ),
+	          _react2.default.createElement(
+	            'div',
+	            null,
+	            selectedArtist.songUrls,
+	            ' songs'
+	          )
+	        );
+	      });
 	
 	      return _react2.default.createElement(
 	        'div',
@@ -28859,18 +28917,9 @@
 	        _react2.default.createElement(
 	          'h3',
 	          null,
-	          this.props.artists.name
+	          this.props.selectedArtist.name
 	        ),
-	        _react2.default.createElement(
-	          'h4',
-	          null,
-	          'ALBUMS'
-	        ),
-	        _react2.default.createElement(
-	          'h4',
-	          null,
-	          'SONGS'
-	        )
+	        albums
 	      );
 	    }
 	  }]);

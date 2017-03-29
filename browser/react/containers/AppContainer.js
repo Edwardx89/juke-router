@@ -107,16 +107,32 @@ export default class AppContainer extends Component {
 
   selectArtist (artistId) {
 
-    // const artist = axios.get(`/api/artists/${artistId}`);
-    const song = axios.get(`/api/artists/${artistId}/songs`);
+    const artist = axios.get(`/api/artists/${artistId}`);
+    const songs = axios.get(`/api/artists/${artistId}/songs`);
+    const albums = axios.get(`/api/artists/${artistId}/albums`);
 
-
-    Promise.all([song])
+    Promise.all([songs, albums, artist])
       .then(function(arr){
         return arr.map( elem => elem.data)
       })
       .then(function(arr){
-        console.log(arr);
+
+        let songNames = arr[0].map(elem => elem.name);
+        let songIds = arr[0].map(elem => elem.id)
+        let albumNames = arr[1].map(elem => elem.name);
+
+        let artist = arr[2]
+        
+        artist.songNames = songNames;
+        artist.albumNames = albumNames;
+        artist.songIds = songIds;
+
+        return artist
+      })
+      .then( artist => {
+        this.setState({
+          selectedArtist: convertArtist(artist)
+        })
       })
 
     // axios.get(`/api/artists/${artistId}`)
@@ -150,6 +166,7 @@ export default class AppContainer extends Component {
 
             artists: this.state.artists,
             selectArtist: this.selectArtist,
+            selectedArtist: this.state.selectedArtist
           })
           : null
         }

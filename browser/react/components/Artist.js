@@ -11,18 +11,37 @@ class Artist extends Component {
     const artistId = this.props.routeParams.artistId;
     const selectArtist = this.props.selectArtist;
 
-
-
     selectArtist(artistId);
   }
 
   render() {
+    console.log(this.props);
+    console.log('running?');
+
+    const albums = this.props.albums.map( album => {
+        return(
+            <div>
+              <div className="col-xs-10">{album.name}</div>
+              <div className="col-xs-10">{album.songs.length} songs</div>
+            </div>
+          )
+      });
+
+    const songs = this.props.songs.map(song => {
+
+      return (
+          <div>
+            <div className="col-xs-10">{selectedArtist.songNames}</div>
+            <div >{selectedArtist.songUrls} songs</div>
+          </div>
+        )
+
+    })
 
     return (
       <div>
-        <h3>{this.props.artists.name}</h3>
-        <h4>ALBUMS</h4>
-        <h4>SONGS</h4>
+        <h3>{this.props.selectedArtist.name}</h3>
+        {albums}
       </div>
   );
   }
