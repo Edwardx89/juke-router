@@ -1,5 +1,6 @@
 export const convertSong = (song) => {
   song.audioUrl = `/api/songs/${song.id}/audio`;
+  console.log('song',song);
   return song;
 };
 
@@ -7,6 +8,13 @@ export const convertAlbum = (album) => {
   album.imageUrl = `/api/albums/${album.id}/image`;
   album.songs = album.songs.map(convertSong);
   return album;
+};
+
+export const convertArtist = (artist) => {
+  artist.songs = artist.map(convertSong);
+  return artist;
+// axios.get('/api/songs/${songs.id}')
+  // console.log('artist',artist)
 };
 
 export const convertAlbums = (albums) =>
