@@ -1,6 +1,6 @@
 export const convertSong = (song) => {
   song.audioUrl = `/api/songs/${song.id}/audio`;
-  console.log('song',song);
+  // console.log('song',song);
   return song;
 };
 
@@ -11,8 +11,15 @@ export const convertAlbum = (album) => {
 };
 
 export const convertArtist = (artist) => {
+  // the artist object have the song names and the song urls on them
+
+  // the artist object already has the url on it
+
+  // we just need the 
+
+
+
   // artist.songs = artist.map(convertSong);
-  console.log('artist', artist)
   // return artist;
 // axios.get('/api/songs/${songs.id}')
   // console.log('artist',artist)

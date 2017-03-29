@@ -21711,15 +21711,23 @@
 	  }, {
 	    key: 'selectArtist',
 	    value: function selectArtist(artistId) {
-	      var _this4 = this;
 	
-	      _axios2.default.get('/api/artists/' + artistId).then(function (res) {
-	        return res.data;
-	      }).then(function (artist) {
-	        return _this4.setState({
-	          selectedArtist: (0, _utils.convertArtist)(artist)
+	      // const artist = axios.get(`/api/artists/${artistId}`);
+	      var song = _axios2.default.get('/api/artists/' + artistId + '/songs');
+	
+	      Promise.all([song]).then(function (arr) {
+	        return arr.map(function (elem) {
+	          return elem.data;
 	        });
+	      }).then(function (arr) {
+	        console.log(arr);
 	      });
+	
+	      // axios.get(`/api/artists/${artistId}`)
+	      //   .then(res => res.data)
+	      //   .then(artist => this.setState({
+	      //     selectedArtist: convertArtist(artist)
+	      //   }));
 	    }
 	  }, {
 	    key: 'deselectAlbum',
@@ -28693,26 +28701,32 @@
 /* 266 */
 /***/ function(module, exports) {
 
-	'use strict';
+	"use strict";
 	
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
 	var convertSong = exports.convertSong = function convertSong(song) {
-	  song.audioUrl = '/api/songs/' + song.id + '/audio';
-	  console.log('song', song);
+	  song.audioUrl = "/api/songs/" + song.id + "/audio";
+	  // console.log('song',song);
 	  return song;
 	};
 	
 	var convertAlbum = exports.convertAlbum = function convertAlbum(album) {
-	  album.imageUrl = '/api/albums/' + album.id + '/image';
+	  album.imageUrl = "/api/albums/" + album.id + "/image";
 	  album.songs = album.songs.map(convertSong);
 	  return album;
 	};
 	
 	var convertArtist = exports.convertArtist = function convertArtist(artist) {
+	  // the artist object have the song names and the song urls on them
+	
+	  // the artist object already has the url on it
+	
+	  // we just need the 
+	
+	
 	  // artist.songs = artist.map(convertSong);
-	  console.log('artist', artist);
 	  // return artist;
 	  // axios.get('/api/songs/${songs.id}')
 	  // console.log('artist',artist)
@@ -28832,13 +28846,13 @@
 	    value: function componentDidMount() {
 	      var artistId = this.props.routeParams.artistId;
 	      var selectArtist = this.props.selectArtist;
-	      console.log(this.props);
+	
 	      selectArtist(artistId);
 	    }
 	  }, {
 	    key: 'render',
 	    value: function render() {
-	      // console.log(this.props)
+	
 	      return _react2.default.createElement(
 	        'div',
 	        null,

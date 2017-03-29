@@ -106,11 +106,24 @@ export default class AppContainer extends Component {
   }
 
   selectArtist (artistId) {
-    axios.get(`/api/artists/${artistId}`)
-      .then(res => res.data)
-      .then(artist => this.setState({
-        selectedArtist: convertArtist(artist)
-      }));
+
+    // const artist = axios.get(`/api/artists/${artistId}`);
+    const song = axios.get(`/api/artists/${artistId}/songs`);
+
+
+    Promise.all([song])
+      .then(function(arr){
+        return arr.map( elem => elem.data)
+      })
+      .then(function(arr){
+        console.log(arr);
+      })
+
+    // axios.get(`/api/artists/${artistId}`)
+    //   .then(res => res.data)
+    //   .then(artist => this.setState({
+    //     selectedArtist: convertArtist(artist)
+    //   }));
   }
 
   deselectAlbum () {

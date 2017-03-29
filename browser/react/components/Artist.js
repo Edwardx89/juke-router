@@ -10,12 +10,14 @@ class Artist extends Component {
   componentDidMount () {
     const artistId = this.props.routeParams.artistId;
     const selectArtist = this.props.selectArtist;
-    console.log(this.props)
+
+
+
     selectArtist(artistId);
   }
 
   render() {
-    // console.log(this.props)
+
     return (
       <div>
         <h3>{this.props.artists.name}</h3>
